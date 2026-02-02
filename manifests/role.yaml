@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: shared-data-provisioner-leader-locking
+  namespace: shared-data-provisioner
+  labels:
+    app.kubernetes.io/name: shared-data-provisioner
+    app.kubernetes.io/instance: shared-data-provisioner
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["list", "watch", "create"]

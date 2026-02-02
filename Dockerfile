@@ -1,6 +1,6 @@
 FROM golang:1.16-alpine AS builder
 
-ARG srcpath="/build/hostpath-provisioner"
+ARG srcpath="/build/shared-data-provisioner"
 
 RUN apk --no-cache add git && \
     mkdir -p "$srcpath"
@@ -10,10 +10,10 @@ ADD . "$srcpath"
 RUN cd "$srcpath" && \
     GO111MODULE=on \
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -a -ldflags '-extldflags "-static"' -o /hostpath-provisioner
+    go build -a -ldflags '-extldflags "-static"' -o /shared-data-provisioner
 
 FROM scratch
 
-COPY --from=builder /hostpath-provisioner /hostpath-provisioner
+COPY --from=builder /shared-data-provisioner /shared-data-provisioner
 
-CMD ["/hostpath-provisioner"]
+CMD ["/shared-data-provisioner"]

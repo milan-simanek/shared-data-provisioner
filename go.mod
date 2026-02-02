@@ -1,4 +1,4 @@
-module github.com/rimusz/hostpath-provisioner
+module github.com/milan-simanek/shared-data-provisioner
 
 require (
 	k8s.io/api v0.19.1

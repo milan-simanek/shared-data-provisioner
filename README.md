@@ -1,35 +1,48 @@
-# Dynamic Provisioning of Kubernetes HostPath Volumes
+# Dynamic Provisioning of specific directory locations using Kubernetes HostPath
 
-A tool to dynamically provision Kubernetes HostPath Volumes in single-node Kubernetes cluster as [kind](https://github.com/kubernetes-sigs/kind).
+This is a dynamic provisioner for Kubernetes. It can connect to your
+application PVC to a predefined directory with a data.
 
-It is based on [kubernetes-sigs/sig-storage-lib-external-provisioner/hostpath-provisioner](https://github.com/kubernetes-sigs/sig-storage-lib-external-provisioner/tree/master/examples/hostpath-provisioner) example project.
+It is based on [Rimusz's hostPath provisioner](https://github.com/rimusz/hostpath-provisioner) project.
 
-## TL;DR
+The provisioner is intended to use on a single node Kubernetes.
+
+# Use cases
+
+- **Situation**: 
+  
+  A pod (or multiple pods) run an imgage (e.g. php) which requires some
+  library (tcpdf) to be mounted on a specific location.
+
+  **Solution**:
+
+  1. Make a subdirectory of the baseDir: /var/shared-data/tcpdf.
+  2. Copy the library into that directory.
+  3. Create a PVC with label component=tcpdf
+  4. Shared-data provisioner will create a PV to match this PVC using
+     hostPath /var/shared-data/tcpdf.
+
+- **Situation**:
+
+  A couple of pods need a shared directory for a comminucation.
+
+  **Solution**:
+
+  1. Create a subdirectory of the baseDir: /var/shared-data/communication
+  2. Create a PVC with label component=communication for each pod
+  3. Shared-data provisioner will create a PVs to match this PVCs using
+     hostPath /var/shared-data/communication
+
+# Installation
+
 
 ```bash
-# install dynamic hostpath provisioner Helm chart
-helm repo add rimusz https://charts.rimusz.net
-helm repo update
-helm upgrade --install hostpath-provisioner --namespace kube-system rimusz/hostpath-provisioner
-```
-
-```bash
-# create a test-pvc and a pod writing to it
-kubectl create -f https://raw.githubusercontent.com/rimusz/hostpath-provisioner/master/deploy/test-claim.yaml
-kubectl create -f https://raw.githubusercontent.com/rimusz/hostpath-provisioner/master/deploy/test-pod.yaml
-
-# docker exec to kind node
-docker exec -it container_id bash
-# expect a folder to exist on your host
-ls -alh /mnt/hostpath/pvc-*/
-
-kubectl delete test-pod
-kubectl delete pvc hostpath-pvc
-
-# expect the folder to be removed from your host
-ls -alh /mnt/hostpath/pvc-*/
+# git clone https://github.com/milan-simanek/shared-data-provisioner
+# cd shared-data-provisioner/manifests
+# ./INSTALL
 ```
 
 ## Additional Environment Variables
 
- `NODE_HOST_PATH` - Use this to set a custom directory as your hostpath mount point. If blank, uses default `/mnt/hostpath`
+ `NODE_BASE_DIR` - Use this to set a custom directory as your base dir where
+ your data components are located, uses default `/var/shared-data`

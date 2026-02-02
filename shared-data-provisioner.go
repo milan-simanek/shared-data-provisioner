@@ -20,8 +20,10 @@ import (
 	"context"
 	"errors"
 	"flag"
+	"fmt"
 	"os"
 	"path"
+	"strings"
 	"syscall"
 
 	"sigs.k8s.io/sig-storage-lib-external-provisioner/v7/controller"
@@ -33,62 +35,77 @@ import (
 	klog "k8s.io/klog/v2"
 )
 
-// Fetch provisioner name from environment variable HOSTPATH_PROVISIONER_NAME
-// if not set uses default hostpath name
+// Fetch provisioner name from environment variable SHARED_DATA_PROVISIONER_NAME
+// if not set uses default shared-data name
 func GetProvisionerName() string {
-	provisionerName := os.Getenv("HOSTPATH_PROVISIONER_NAME")
+	provisionerName := os.Getenv("SHARED_DATA_PROVISIONER_NAME")
 	if provisionerName == "" {
-		provisionerName = "hostpath"
+		provisionerName = "shared-data"
 	}
 	return provisionerName
 }
 
 
-type hostPathProvisioner struct {
-	// The directory to create PV-backing directories in
-	pvDir string
+type sharedDataProvisioner struct {
+	// The base directory where the sahred data is located
+	baseDir string
 
-	// Identity of this hostPathProvisioner, set to node's name. Used to identify
+	// Identity of this sharedDataProvisioner, set to node's name. Used to identify
 	// "this" provisioner's PVs.
 	identity string
 }
 
-// NewHostPathProvisioner creates a new hostpath provisioner
-func NewHostPathProvisioner() controller.Provisioner {
+// NewSharedDataProvisioner creates a new shared-data provisioner
+func NewSharedDataProvisioner() controller.Provisioner {
 	nodeName := os.Getenv("NODE_NAME")
 	if nodeName == "" {
 		klog.Fatal("env variable NODE_NAME must be set so that this provisioner can identify itself")
 	}
-	nodeHostPath := os.Getenv("NODE_HOST_PATH")
-	if nodeHostPath == "" {
-		nodeHostPath = "/mnt/hostpath"
+	nodeBaseDir := os.Getenv("NODE_BASE_DIR")
+	if nodeBaseDir == "" {
+		nodeBaseDir = "/var/shared-data"
 	}
-	return &hostPathProvisioner{
-		pvDir:    nodeHostPath,
+	return &sharedDataProvisioner{
+		baseDir:  nodeBaseDir,
 		identity: nodeName,
 	}
 }
 
-var _ controller.Provisioner = &hostPathProvisioner{}
+var _ controller.Provisioner = &sharedDataProvisioner{}
 
-// Provision creates a storage asset and returns a PV object representing it.
-func (p *hostPathProvisioner) Provision(ctx context.Context, options controller.ProvisionOptions) (*v1.PersistentVolume, controller.ProvisioningState, error) {
-	path := path.Join(p.pvDir, options.PVName)
-
-	if err := os.MkdirAll(path, 0777); err != nil {
-		return nil, controller.ProvisioningFinished, err
+// Provision verifies that the data directory exists and returns a PV object representing it.
+func (p *sharedDataProvisioner) Provision(ctx context.Context, options controller.ProvisionOptions) (*v1.PersistentVolume, controller.ProvisioningState, error) {
+        component := options.PVC.GetLabels()["component"]
+        
+        if strings.Contains(component, "/") {
+        	return nil, controller.ProvisioningFinished, fmt.Errorf("PVC label 'component' contains invalid character '/'")
+        }
+        
+        if len(component) == 0 {
+        	return nil, controller.ProvisioningFinished, fmt.Errorf("PVC label 'component' is empty or not defined")
 	}
 
+	path := path.Join(p.baseDir, component)
+	info, err := os.Stat(path)
+	if err != nil {
+		return nil, controller.ProvisioningFinished, fmt.Errorf("failed to stat path: %v", err)
+	}
+	if !info.IsDir() {
+		return nil, controller.ProvisioningFinished, fmt.Errorf("path is not a directory: %s", path)
+	}
+	
+	fmt.Printf("provisioning directory '%s'\n", path)
+	
 	pv := &v1.PersistentVolume{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: options.PVName,
 			Annotations: map[string]string{
-				"hostPathProvisionerIdentity": p.identity,
+				"sharedDataProvisionerIdentity": p.identity,
 			},
 		},
 		Spec: v1.PersistentVolumeSpec{
 			PersistentVolumeReclaimPolicy: *options.StorageClass.ReclaimPolicy,
-			AccessModes:                   options.PVC.Spec.AccessModes,
+			AccessModes:                   []v1.PersistentVolumeAccessMode{v1.ReadOnlyMany},
 			Capacity: v1.ResourceList{
 				v1.ResourceName(v1.ResourceStorage): options.PVC.Spec.Resources.Requests[v1.ResourceName(v1.ResourceStorage)],
 			},
@@ -103,20 +120,14 @@ func (p *hostPathProvisioner) Provision(ctx context.Context, options controller.
 	return pv, controller.ProvisioningFinished, nil
 }
 
-// Delete removes the storage asset that was created by Provision represented
-// by the given PV.
-func (p *hostPathProvisioner) Delete(ctx context.Context, volume *v1.PersistentVolume) error {
-	ann, ok := volume.Annotations["hostPathProvisionerIdentity"]
+// Delete does not remove the data (the data is shared)
+func (p *sharedDataProvisioner) Delete(ctx context.Context, volume *v1.PersistentVolume) error {
+	ann, ok := volume.Annotations["sharedDataProvisionerIdentity"]
 	if !ok {
 		return errors.New("identity annotation not found on PV")
 	}
 	if ann != p.identity {
 		return &controller.IgnoredError{Reason: "identity annotation on PV does not match ours"}
-	}
-
-	path := path.Join(p.pvDir, volume.Name)
-	if err := os.RemoveAll(path); err != nil {
-		return err
 	}
 
 	return nil
@@ -141,11 +152,11 @@ func main() {
 
 	// Create the provisioner: it implements the Provisioner interface expected by
 	// the controller
-	hostPathProvisioner := NewHostPathProvisioner()
+	sharedDataProvisioner := NewSharedDataProvisioner()
 
 	// Start the provision controller which will dynamically provision hostPath
 	// PVs
-	pc := controller.NewProvisionController(clientset, GetProvisionerName(), hostPathProvisioner)
+	pc := controller.NewProvisionController(clientset, GetProvisionerName(), sharedDataProvisioner)
 
 	// Never stops.
 	pc.Run(context.Background())
