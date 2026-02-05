@@ -1,0 +1,15 @@
+apiVersion: v2
+name: shared-data-provisioner
+description: A Helm chart for Kubernetes installing shared-data provisioner
+
+type: application
+version: 0.1.2
+appVersion: "0.1.2"
+keywords:
+  - shared data
+  - provisioner
+  - single node cluster
+home: https://github.com/milan-simanek/shared-data-provisioner
+maintainers:
+  - name: Milan Šimánek
+    email: milan.simanek@seznam.cz

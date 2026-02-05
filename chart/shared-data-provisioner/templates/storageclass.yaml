@@ -1,0 +1,6 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: shared-data
+provisioner: shared-data
+reclaimPolicy: Retain

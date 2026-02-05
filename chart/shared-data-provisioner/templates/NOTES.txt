@@ -1,0 +1,19 @@
+How to start:
+
+Having a component (subdirectory) abc in a base directory {{ .Values.baseDir }}
+you can create a PVC:
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-abc
+  labels:
+    component: abc
+spec:
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: shared-data
+  resources:
+    requests:
+      storage: 1M	# the size is not used at all
+
