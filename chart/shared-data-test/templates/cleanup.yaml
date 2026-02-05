@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cleanup-hook
+  namespace: {{ .Values.namespace }}
+  annotations:
+    "helm.sh/hook": "post-delete"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: cleanup-hook
+    spec:
+      containers:
+        - name: app
+          image: busybox:1.27
+          command:
+            - sh
+            - -c
+            - "rm -f /data/test-data/test.txt && rmdir /data/test-data"
+          volumeMounts:
+            - name: data
+              mountPath: "/data"
+      volumes:
+        - name: data
+          hostPath:
+            path: {{ .Values.baseDir }}
+      restartPolicy: Never

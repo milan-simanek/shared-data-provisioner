@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tester
+  namespace: {{ .Values.namespace }}
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: tester
+    spec:
+      containers:
+        - name: app
+          image: busybox:1.27
+          command:
+            - cat
+            - /data/test.txt
+          volumeMounts:
+            - name: data
+              mountPath: "/data"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: test-pvc
+      restartPolicy: Never

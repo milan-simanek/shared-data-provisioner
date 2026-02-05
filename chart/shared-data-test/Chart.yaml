@@ -1,0 +1,15 @@
+apiVersion: v2
+name: shared-data-test
+description: A Helm chart for shared-data provisioner tester
+
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - shared data
+  - provisioner
+  - single node cluster
+home: https://github.com/milan-simanek/shared-data-provisioner
+maintainers:
+  - name: Milan Šimánek
+    email: milan.simanek@seznam.cz

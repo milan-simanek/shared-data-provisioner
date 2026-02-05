@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: preparation-hook
+  namespace: {{ .Values.namespace }}
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: preparation-hook
+    spec:
+      containers:
+        - name: app
+          image: busybox:1.27
+          command:
+            - sh
+            - -c
+            - "mkdir /data/test-data && echo 'It Works!' > /data/test-data/test.txt"
+          volumeMounts:
+            - name: data
+              mountPath: "/data"
+      volumes:
+        - name: data
+          hostPath:
+            path: {{ .Values.baseDir }}
+      restartPolicy: Never
