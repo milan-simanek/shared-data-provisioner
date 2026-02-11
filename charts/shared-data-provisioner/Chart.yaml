@@ -3,12 +3,13 @@ name: shared-data-provisioner
 description: A Helm chart for Kubernetes installing shared-data provisioner
 
 type: application
-version: 0.1.2
-appVersion: "0.1.2"
+version: 0.1.3
+appVersion: "0.1.3"
 keywords:
   - shared data
   - provisioner
   - single node cluster
+  - local disk
 home: https://github.com/milan-simanek/shared-data-provisioner
 maintainers:
   - name: Milan Šimánek

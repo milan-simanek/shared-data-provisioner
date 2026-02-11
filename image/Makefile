@@ -1,15 +1,12 @@
 #
 IMAGE?=docker.io/milansimanek/shared-data-provisioner
 
-TAG_GIT=$(IMAGE):v0.1.2
+TAG:=$(strip $(shell head -n 1 tag))
+TAG_GIT=$(IMAGE):$(TAG)
 TAG_LATEST=$(IMAGE):latest
 
-PHONY: test-image
-test-image:
-	docker build -t shared-data-provisioner -f Dockerfile .
-
 PHONY: all
-all: image push
+all: image
 
 PHONY: image
 image:
@@ -17,7 +14,7 @@ image:
 	docker tag $(TAG_GIT) $(TAG_LATEST)
 
 PHONY: push
-push:
+push: image
 	docker push $(TAG_GIT)
 	docker push $(TAG_LATEST)
 

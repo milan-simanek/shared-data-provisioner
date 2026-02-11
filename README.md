@@ -35,6 +35,17 @@ The provisioner is intended to use on a single node Kubernetes.
 
 # Installation
 
+There are two methods how to install this provisioner: using shell script or
+using helm chart. Helm chart method is prefered.
+
+## Helm chart install method
+
+```bash
+$ helm install shared-data-provisioner https://
+$
+```
+
+## Shell script install method
 
 ```bash
 # git clone https://github.com/milan-simanek/shared-data-provisioner
