@@ -41,8 +41,16 @@ using helm chart. Helm chart method is prefered.
 ## Helm chart install method
 
 ```bash
-$ helm install shared-data-provisioner https://milan-simanek.github.io/shared-data-provisioner
-$
+helm repo add shared-data https://milan-simanek.github.io/shared-data-provisioner
+helm repo update
+helm search repo shared-data
+```
+
+Alternatively using oneliner:
+
+```bash
+helm install shared-data-provisioner
+https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-0.1.3/shared-data-provisioner-0.1.3.tgz
 ```
 
 ## Shell script install method
