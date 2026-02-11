@@ -1,0 +1,7 @@
+# namespace where the test should run
+namespace: shared-data-provisioner
+
+# host-directory where all shared components are located
+# it should be the same which is used by shared-data-provisioner
+baseDir: /var/shared-data
+
