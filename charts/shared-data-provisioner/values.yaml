@@ -1,3 +1,8 @@
+# namespace where the provisioner pod is running
 namespace: shared-data-provisioner
+
+# host-directory where all shared components are located
 baseDir: /var/shared-data
-image: milansimanek/shared-data-provisioner:v0.1.2
+
+# location of OCI image of the provisioner
+image: docker.io/milansimanek/shared-data-provisioner:v0.1.3
