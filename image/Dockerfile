@@ -1,13 +1,11 @@
 FROM golang:1.16-alpine AS builder
 
-ARG srcpath="/build/shared-data-provisioner/"
+ADD . /build
 
-ADD . "$srcpath"
-
-RUN apk add make && make -C "$srcpath" shared-data-provisioner
+RUN apk add make && make -C /build shared-data-provisioner
 
 FROM scratch
 
-COPY --from=builder "$srcpath"/shared-data-provisioner /shared-data-provisioner
+COPY --from=builder /build/shared-data-provisioner /shared-data-provisioner
 
 CMD ["/shared-data-provisioner"]
