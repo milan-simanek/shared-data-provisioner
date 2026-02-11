@@ -27,10 +27,10 @@ jobs:
           TAG=$(cat image/tag)
           if docker manifest inspect milansimanek/avrbuid:$TAG > /dev/null 2>&1
           then
-            echo "image already exists, nothing to do."
+            echo "image[$TAG] already exists, nothing to do."
             echo "build=false" >> $GITHUB_OUTPUT
           else
-            echo "Image is not present in Docker HUB -> building..."
+            echo "Image[$TAG] is not present in Docker HUB -> building..."
             echo "build=true" >> $GITHUB_OUTPUT
           fi
           
@@ -44,5 +44,5 @@ jobs:
 
       - name: Run make to build and push the image
         if: steps.check.outputs.build == 'true'
-        run: make push
+        run: make -C image push
  
