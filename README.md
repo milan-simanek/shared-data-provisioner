@@ -41,7 +41,7 @@ using helm chart. Helm chart method is prefered.
 ## Helm chart install method
 
 ```bash
-$ helm install shared-data-provisioner https://
+$ helm install shared-data-provisioner https://milan-simanek.github.io/shared-data-provisioner
 $
 ```
 
