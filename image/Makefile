@@ -1,6 +1,7 @@
-#
+# the image name
 IMAGE?=docker.io/milansimanek/shared-data-provisioner
 
+# the current tag is stored in "./tag" file
 TAG:=$(strip $(shell head -n 1 tag))
 TAG_GIT=$(IMAGE):$(TAG)
 TAG_LATEST=$(IMAGE):latest
