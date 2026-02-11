@@ -1,9 +1,6 @@
 FROM golang:1.16-alpine AS builder
 
-ARG srcpath="/build/shared-data-provisioner"
-
-RUN apk --no-cache add git && \
-    mkdir -p "$srcpath"
+ARG srcpath="/build/shared-data-provisioner/"
 
 ADD . "$srcpath"
 
