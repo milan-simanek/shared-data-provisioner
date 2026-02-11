@@ -4,10 +4,10 @@ ARG srcpath="/build/shared-data-provisioner/"
 
 ADD . "$srcpath"
 
-RUN make -C "$srcpath"
+RUN apk add make && make -C "$srcpath" shared-data-provisioner
 
 FROM scratch
 
-COPY --from=builder /shared-data-provisioner /shared-data-provisioner
+COPY --from=builder "$srcpath"/shared-data-provisioner /shared-data-provisioner
 
 CMD ["/shared-data-provisioner"]
