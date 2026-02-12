@@ -2,6 +2,25 @@ apiVersion: v1
 entries:
   shared-data-provisioner:
   - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-02-12T17:28:07.474470564Z"
+    description: A Helm chart for Kubernetes installing shared-data provisioner
+    digest: 294c546a9a7a99c4fba6db9ddb8935ecbf728313562cfe50deab8c7c01fd62d1
+    home: https://github.com/milan-simanek/shared-data-provisioner
+    keywords:
+    - shared data
+    - provisioner
+    - single node cluster
+    - local disk
+    maintainers:
+    - email: milan.simanek@seznam.cz
+      name: Milan Šimánek
+    name: shared-data-provisioner
+    type: application
+    urls:
+    - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-provisioner-1.0.0/shared-data-provisioner-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 0.1.3
     created: "2026-02-11T20:22:45.10599605Z"
     description: A Helm chart for Kubernetes installing shared-data provisioner
@@ -22,6 +41,23 @@ entries:
     version: 0.1.3
   shared-data-test:
   - apiVersion: v2
+    created: "2026-02-12T17:28:07.66307506Z"
+    description: A Helm chart for shared-data provisioner tester
+    digest: 8dd428fbe3e56b65d56dc04358c94e394f01efea985db7f5d1bd075c8e583416
+    home: https://github.com/milan-simanek/shared-data-provisioner
+    keywords:
+    - shared data
+    - provisioner
+    - single node cluster
+    maintainers:
+    - email: milan.simanek@seznam.cz
+      name: Milan Šimánek
+    name: shared-data-test
+    type: application
+    urls:
+    - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-test-1.0.0/shared-data-test-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2026-02-11T20:10:52.100407419Z"
     description: A Helm chart for shared-data provisioner tester
@@ -39,4 +75,4 @@ entries:
     urls:
     - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-test-0.1.0/shared-data-test-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-11T20:22:45.313756168Z"
+generated: "2026-02-12T17:28:07.663093544Z"
