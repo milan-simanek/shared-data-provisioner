@@ -1,3 +1,4 @@
+
 /*
 Copyright 2018 The Kubernetes Authors.
 
@@ -45,7 +46,6 @@ func GetProvisionerName() string {
 	return provisionerName
 }
 
-
 type sharedDataProvisioner struct {
 	// The base directory where the sahred data is located
 	baseDir string
@@ -75,14 +75,13 @@ var _ controller.Provisioner = &sharedDataProvisioner{}
 
 // Provision verifies that the data directory exists and returns a PV object representing it.
 func (p *sharedDataProvisioner) Provision(ctx context.Context, options controller.ProvisionOptions) (*v1.PersistentVolume, controller.ProvisioningState, error) {
-        component := options.PVC.GetLabels()["component"]
-        
-        if strings.Contains(component, "/") {
-        	return nil, controller.ProvisioningFinished, fmt.Errorf("PVC label 'component' contains invalid character '/'")
-        }
-        
-        if len(component) == 0 {
-        	return nil, controller.ProvisioningFinished, fmt.Errorf("PVC label 'component' is empty or not defined")
+	component := options.PVC.Spec.Selector.MatchLabels["component"]
+	if strings.Contains(component, "/") {
+		return nil, controller.ProvisioningFinished, fmt.Errorf("PVC spec.selector.matchLabes.component: contains invalid character '/'")
+	}
+
+	if len(component) == 0 {
+		return nil, controller.ProvisioningFinished, fmt.Errorf("PVC spec.selector.matchLabes.component is empty or not defined")
 	}
 
 	path := path.Join(p.baseDir, component)
@@ -93,14 +92,17 @@ func (p *sharedDataProvisioner) Provision(ctx context.Context, options controlle
 	if !info.IsDir() {
 		return nil, controller.ProvisioningFinished, fmt.Errorf("path is not a directory: %s", path)
 	}
-	
+
 	fmt.Printf("provisioning directory '%s'\n", path)
-	
+
 	pv := &v1.PersistentVolume{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: options.PVName,
 			Annotations: map[string]string{
 				"sharedDataProvisionerIdentity": p.identity,
+			},
+			Labels: map[string]string{
+				"component": component,
 			},
 		},
 		Spec: v1.PersistentVolumeSpec{
@@ -116,6 +118,8 @@ func (p *sharedDataProvisioner) Provision(ctx context.Context, options controlle
 			},
 		},
 	}
+
+	//	options.PVC.ObjectMeta.SetLabels(pv.Labels)
 
 	return pv, controller.ProvisioningFinished, nil
 }

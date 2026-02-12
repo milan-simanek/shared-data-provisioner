@@ -5,4 +5,4 @@ metadata:
   labels:
     app.kubernetes.io/instance: shared-data-provisioner
 provisioner: shared-data
-reclaimPolicy: Retain
+reclaimPolicy: Delete

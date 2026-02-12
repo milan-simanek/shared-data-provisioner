@@ -18,7 +18,7 @@ The provisioner is intended to use on a single node Kubernetes.
 
   1. Make a subdirectory of the baseDir: /var/shared-data/tcpdf.
   2. Copy the library into that directory.
-  3. Create a PVC with label component=tcpdf
+  3. Create a PVC with spec.selector.matchLabels.component=tcpdf
   4. Shared-data provisioner will create a PV to match this PVC using
      hostPath /var/shared-data/tcpdf.
 
@@ -29,7 +29,7 @@ The provisioner is intended to use on a single node Kubernetes.
   **Solution**:
 
   1. Create a subdirectory of the baseDir: /var/shared-data/communication
-  2. Create a PVC with label component=communication for each pod
+  2. Create a PVC with spec.selector.matchLabels.component=communication for each pod
   3. Shared-data provisioner will create a PVs to match this PVCs using
      hostPath /var/shared-data/communication
 
@@ -44,13 +44,14 @@ using helm chart. Helm chart method is prefered.
 helm repo add shared-data https://milan-simanek.github.io/shared-data-provisioner
 helm repo update
 helm search repo shared-data
+helm install shared-data/shared-data-provisioner
 ```
 
 Alternatively using oneliner:
 
 ```bash
 helm install shared-data-provisioner
-https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-0.1.3/shared-data-provisioner-0.1.3.tgz
+https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-1.0.0/shared-data-provisioner-1.0.0.tgz
 ```
 
 ## Shell script install method

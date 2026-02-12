@@ -1,8 +1,10 @@
 FROM golang:1.16-alpine AS builder
 
+RUN apk add make 
+
 ADD . /build
 
-RUN apk add make && make -C /build shared-data-provisioner
+RUN make -C /build shared-data-provisioner
 
 FROM scratch
 

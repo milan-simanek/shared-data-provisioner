@@ -4,7 +4,7 @@ Let us have a directory ```/var/data``` (called base directory) containing
 several subdirectories called components. 
 These components contain various data (like libraries) which
 need to be mounted inside a container. To do this, one can create a
-PersistentVolumeClaim with a label ```component=abc``` where ``abc`` is the
+PersistentVolumeClaim with a ```spec.selector.matchLabels.component=abc``` where ``abc`` is the
 name of the component to be mounted. The provisioner will automatically
 provision a PersistentVolume accessing the requested component of the base
 directory.
@@ -35,4 +35,4 @@ See more on https://github.com/milan-simanek/shared-data-provisioner
 
 - image
   The OCI image with provisioner binary 
-  (defaults to `` milansimanek/shared-data-provisioner:v0.1.3``)
+  (defaults to `` milansimanek/shared-data-provisioner:v1.0.0``)

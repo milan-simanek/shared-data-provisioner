@@ -1,2 +1,4 @@
-hostpath-provisioner
+image/shared-data-provisioner
 tmp
+*~
+*.bak

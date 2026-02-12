@@ -1,5 +1,6 @@
 # the image name
 IMAGE?=docker.io/milansimanek/shared-data-provisioner
+BINARY=shared-data-provisioner
 
 # the current tag is stored in "./tag" file
 TAG:=$(strip $(shell head -n 1 tag))
@@ -19,8 +20,8 @@ push: image
 	docker push $(TAG_GIT)
 	docker push $(TAG_LATEST)
 
-PHONY: shared-data-provisioner
-shared-data-provisioner: export CGO_ENABLED=0
-shared-data-provisioner: export GO111MODULE=on
-shared-data-provisioner: $(shell find . -name "*.go")
-	go build -a -ldflags '-extldflags "-static"' -o shared-data-provisioner .
+$(BINARY): $(wildcard *.go)
+	CGO_ENABLED=0 GO111MODULE=on go build -a -ldflags '-extldflags "-static"' -o $@ .
+
+clean:
+	rm -f shared-data-provisioner 

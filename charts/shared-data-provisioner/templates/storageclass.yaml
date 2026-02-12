@@ -3,4 +3,4 @@ kind: StorageClass
 metadata:
   name: shared-data
 provisioner: shared-data
-reclaimPolicy: Retain
+reclaimPolicy: Delete

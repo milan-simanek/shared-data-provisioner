@@ -16,7 +16,7 @@ spec:
       serviceAccountName: shared-data-provisioner
       containers:
         - name: provisioner
-          image: "milansimanek/shared-data-provisioner:v0.1.2"
+          image: "milansimanek/shared-data-provisioner:v1.0.0"
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_NAME

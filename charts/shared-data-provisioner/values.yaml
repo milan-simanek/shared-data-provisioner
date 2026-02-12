@@ -5,4 +5,4 @@ namespace: shared-data-provisioner
 baseDir: /var/shared-data
 
 # location of OCI image of the provisioner
-image: docker.io/milansimanek/shared-data-provisioner:v0.1.3
+image: docker.io/milansimanek/shared-data-provisioner:v1.0.0

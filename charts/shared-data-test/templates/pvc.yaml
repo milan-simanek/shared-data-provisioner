@@ -3,9 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: test-pvc
   namespace: {{ .Values.namespace }}
-  labels:
-    component: test-data
 spec:
+  selector:
+    matchLabels:
+      component: test-data
   accessModes:
   - ReadOnlyMany
   storageClassName: shared-data
