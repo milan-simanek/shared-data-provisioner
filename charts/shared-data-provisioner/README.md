@@ -35,4 +35,4 @@ See more on https://github.com/milan-simanek/shared-data-provisioner
 
 - image
   The OCI image with provisioner binary 
-  (defaults to `` milansimanek/shared-data-provisioner:v0.1.3``)
+  (defaults to `` docker.io/milansimanek/shared-data-provisioner:v0.1.3-label``)
