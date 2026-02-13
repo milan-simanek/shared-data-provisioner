@@ -44,14 +44,13 @@ using helm chart. Helm chart method is prefered.
 helm repo add shared-data https://milan-simanek.github.io/shared-data-provisioner
 helm repo update
 helm search repo shared-data
-helm install shared-data/shared-data-provisioner
+helm install --namespace shared-data-provisioner --create-namespace shared-data shared-data/shared-data-provisioner
 ```
 
 Alternatively using oneliner:
 
 ```bash
-helm install shared-data-provisioner
-https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-1.0.0/shared-data-provisioner-1.0.0.tgz
+helm install --namespace shared-data-provisioner --create-namespace shared-data https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-1.0.0/shared-data-provisioner-1.0.0.tgz
 ```
 
 ## Shell script install method
@@ -62,7 +61,3 @@ https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-
 # ./INSTALL
 ```
 
-## Additional Environment Variables
-
- `NODE_BASE_DIR` - Use this to set a custom directory as your base dir where
- your data components are located, uses default `/var/shared-data`

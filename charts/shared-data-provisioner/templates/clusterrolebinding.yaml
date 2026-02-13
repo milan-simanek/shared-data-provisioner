@@ -9,4 +9,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: shared-data-provisioner
-    namespace: {{ .Values.namespace }}
+    namespace: {{ .Release.Namespace }}

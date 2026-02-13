@@ -21,12 +21,13 @@ filesystem).
 
 See more on https://github.com/milan-simanek/shared-data-provisioner
 
-## Values
+## Namespace
 
-- namespace
-  
-  Kubernetes namespace where the provisioner should run
-  (defaults to ``shared-data-provisioner``)
+During install you have to specify ``--namespace`` parameter and
+``--create-namespace`` parameter. The namespace will be created by the chart
+together with necessary labels.
+
+## Values
 
 - baseDir
   
