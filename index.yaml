@@ -3,6 +3,25 @@ entries:
   shared-data-provisioner:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-02-17T10:28:27.677408325Z"
+    description: A Helm chart for Kubernetes installing shared-data provisioner
+    digest: 16e37af8152e1493c430166e6bccd4888f1e172b97deb8eab4b8b303cf4c2b77
+    home: https://github.com/milan-simanek/shared-data-provisioner
+    keywords:
+    - shared data
+    - provisioner
+    - single node cluster
+    - local disk
+    maintainers:
+    - email: milan.simanek@seznam.cz
+      name: Milan Šimánek
+    name: shared-data-provisioner
+    type: application
+    urls:
+    - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-provisioner-1.0.4/shared-data-provisioner-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-02-17T09:35:00.030552051Z"
     description: A Helm chart for Kubernetes installing shared-data provisioner
     digest: c255bebd661a1da51cac80fa7d0e2d403f9356ec6b241da6cb984adb798f8845
@@ -113,4 +132,4 @@ entries:
     urls:
     - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-test-0.1.0/shared-data-test-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-17T09:35:00.030582097Z"
+generated: "2026-02-17T10:28:27.677431308Z"
