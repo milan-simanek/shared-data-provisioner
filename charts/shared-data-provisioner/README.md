@@ -23,9 +23,10 @@ See more on https://github.com/milan-simanek/shared-data-provisioner
 
 ## Namespace
 
-During install you have to specify ``--namespace`` parameter and
-``--create-namespace`` parameter. The namespace will be created by the chart
-together with necessary labels.
+The helm chart deploys the provisioner into the namespace specified as an
+argument to helm (``--namespace``) or as a value. The namespace has to be
+created before ``helm install`` and it should follow ``privileged`` Pod
+Security Standard level. 
 
 ## Values
 
@@ -38,6 +39,9 @@ together with necessary labels.
   The OCI image with provisioner binary 
   (defaults to `` milansimanek/shared-data-provisioner:v1.0.0``)
 
+- namespace
+  The target namespace for the installation
+  (defaults to the helm release namespace)
 
 ### other values - usually you need not to change them
     ClusterRole and ClusterRoleBinding allowing to create PersistentVolumes and modify PersistentVolumeClaim

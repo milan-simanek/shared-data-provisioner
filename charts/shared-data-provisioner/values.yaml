@@ -4,6 +4,9 @@ baseDir: /var/shared-data
 # location of OCI image of the provisioner
 image: docker.io/milansimanek/shared-data-provisioner:v1.0.0
 
+# the target namespace for installation (defaults to helm release namespace)
+namespace: ""
+
 # other values - usually you need not to change them
 # the ClusterRole and ClusterRoleBinding allowing to create PersistentVolumes and modify PersistentVolumeClaim
 clusterRoleName: shared-data-provisioner

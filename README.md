@@ -44,13 +44,17 @@ using helm chart. Helm chart method is prefered.
 helm repo add shared-data https://milan-simanek.github.io/shared-data-provisioner
 helm repo update
 helm search repo shared-data
-helm install --namespace shared-data-provisioner --create-namespace shared-data shared-data/shared-data-provisioner
+kubectl create ns shared-data-provisioner
+kubectl label ns/shared-data-provisioner pod-security.kubernetes.io/enforce=privileged
+helm install --namespace shared-data-provisioner shared-data shared-data/shared-data-provisioner
 ```
 
 Alternatively using oneliner:
 
 ```bash
-helm install --namespace shared-data-provisioner --create-namespace shared-data https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-1.0.0/shared-data-provisioner-1.0.0.tgz
+kubectl create ns shared-data-provisioner
+kubectl label ns/shared-data-provisioner pod-security.kubernetes.io/enforce=privileged
+helm install --namespace shared-data-provisioner shared-data https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-1.0.0/shared-data-provisioner-1.0.0.tgz
 ```
 
 ## Shell script install method

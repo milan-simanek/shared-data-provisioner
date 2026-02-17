@@ -3,7 +3,7 @@ name: shared-data-provisioner
 description: A Helm chart for Kubernetes installing shared-data provisioner
 
 type: application
-version: 1.0.3
+version: 1.0.4
 appVersion: "1.0.0"
 keywords:
   - shared data
