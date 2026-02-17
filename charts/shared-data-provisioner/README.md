@@ -37,3 +37,13 @@ together with necessary labels.
 - image
   The OCI image with provisioner binary 
   (defaults to `` milansimanek/shared-data-provisioner:v1.0.0``)
+
+
+### other values - usually you need not to change them
+    ClusterRole and ClusterRoleBinding allowing to create PersistentVolumes and modify PersistentVolumeClaim
+```
+clusterRoleName: shared-data-provisioner
+clusterRoleBindingName: shared-data-provisioner
+serviceAccountName: shared-data-provisioner
+leaderLockingRoleName: shared-data-provisioner-leader-locking
+```

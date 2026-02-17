@@ -13,7 +13,7 @@ spec:
       labels:
         appprov: shared-data-provisioner
     spec:
-      serviceAccountName: shared-data-provisioner
+      serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
         - name: provisioner
           image: {{ .Values.image }}
