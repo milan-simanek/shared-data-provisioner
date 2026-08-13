@@ -2,6 +2,25 @@ apiVersion: v1
 entries:
   shared-data-provisioner:
   - apiVersion: v2
+    appVersion: 1.1.0
+    created: "2026-08-13T13:57:56.941916587Z"
+    description: A Helm chart for Kubernetes installing shared-data provisioner
+    digest: 59d304ca0646746c1050fb0a7fdcbad687ef0d1881f73f6bb25fdba10d1ef5a9
+    home: https://github.com/milan-simanek/shared-data-provisioner
+    keywords:
+    - shared data
+    - provisioner
+    - single node cluster
+    - local disk
+    maintainers:
+    - email: milan.simanek@seznam.cz
+      name: Milan Šimánek
+    name: shared-data-provisioner
+    type: application
+    urls:
+    - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-provisioner-1.0.5/shared-data-provisioner-1.0.5.tgz
+    version: 1.0.5
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2026-02-17T10:28:27.677408325Z"
     description: A Helm chart for Kubernetes installing shared-data provisioner
@@ -98,6 +117,23 @@ entries:
     version: 0.1.3
   shared-data-test:
   - apiVersion: v2
+    created: "2026-08-13T13:57:57.095526233Z"
+    description: A Helm chart for shared-data provisioner tester
+    digest: a76854c3707d0b0f402d34de5af5f8ef52dad45d0ef85efa399dbef2d8775ba9
+    home: https://github.com/milan-simanek/shared-data-provisioner
+    keywords:
+    - shared data
+    - provisioner
+    - single node cluster
+    maintainers:
+    - email: milan.simanek@seznam.cz
+      name: Milan Šimánek
+    name: shared-data-test
+    type: application
+    urls:
+    - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-test-1.0.1/shared-data-test-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2026-02-12T17:28:07.66307506Z"
     description: A Helm chart for shared-data provisioner tester
     digest: 8dd428fbe3e56b65d56dc04358c94e394f01efea985db7f5d1bd075c8e583416
@@ -132,4 +168,4 @@ entries:
     urls:
     - https://github.com/milan-simanek/shared-data-provisioner/releases/download/shared-data-test-0.1.0/shared-data-test-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-17T10:28:27.677431308Z"
+generated: "2026-08-13T13:57:57.095554273Z"
