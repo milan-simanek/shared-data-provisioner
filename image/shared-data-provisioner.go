@@ -27,7 +27,7 @@ import (
 	"strings"
 	"syscall"
 
-	"sigs.k8s.io/sig-storage-lib-external-provisioner/v7/controller"
+	"sigs.k8s.io/sig-storage-lib-external-provisioner/v11/controller"
 
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -160,7 +160,7 @@ func main() {
 
 	// Start the provision controller which will dynamically provision hostPath
 	// PVs
-	pc := controller.NewProvisionController(clientset, GetProvisionerName(), sharedDataProvisioner)
+	pc := controller.NewProvisionController(context.Background(), clientset, GetProvisionerName(), sharedDataProvisioner)
 
 	// Never stops.
 	pc.Run(context.Background())

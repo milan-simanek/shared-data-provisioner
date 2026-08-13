@@ -3,7 +3,7 @@ name: shared-data-test
 description: A Helm chart for shared-data provisioner tester
 
 type: application
-version: 1.0.0
+version: 1.0.1
 keywords:
   - shared data
   - provisioner

@@ -2,7 +2,7 @@
 baseDir: /var/shared-data
 
 # location of OCI image of the provisioner
-image: docker.io/milansimanek/shared-data-provisioner:v1.0.0
+image: docker.io/milansimanek/shared-data-provisioner:v1.1.0
 
 # the target namespace for installation (defaults to helm release namespace)
 namespace: ""

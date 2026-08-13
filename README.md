@@ -54,7 +54,7 @@ Alternatively using oneliner:
 ```bash
 kubectl create ns shared-data-provisioner
 kubectl label ns/shared-data-provisioner pod-security.kubernetes.io/enforce=privileged
-helm install --namespace shared-data-provisioner shared-data https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-1.0.0/shared-data-provisioner-1.0.0.tgz
+helm install --namespace shared-data-provisioner shared-data https://milan-simanek.github.io/shared-data-provisioner/shared-data-provisioner-1.1.0/shared-data-provisioner-1.1.0.tgz
 ```
 
 ## Shell script install method
